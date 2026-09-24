@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GradientsRouteImport } from './routes/gradients'
+import { Route as PalettesRouteImport } from './routes/palettes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GradientsRoute = GradientsRouteImport.update({
+  id: '/gradients',
+  path: '/gradients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PalettesRoute = PalettesRouteImport.update({
+  id: '/palettes',
+  path: '/palettes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/gradients': typeof GradientsRoute
+  '/palettes': typeof PalettesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/gradients': typeof GradientsRoute
+  '/palettes': typeof PalettesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/gradients': typeof GradientsRoute
+  '/palettes': typeof PalettesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/gradients' | '/palettes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/gradients' | '/palettes'
+  id: '__root__' | '/' | '/gradients' | '/palettes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GradientsRoute: typeof GradientsRoute
+  PalettesRoute: typeof PalettesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gradients': {
+      id: '/gradients'
+      path: '/gradients'
+      fullPath: '/gradients'
+      preLoaderRoute: typeof GradientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/palettes': {
+      id: '/palettes'
+      path: '/palettes'
+      fullPath: '/palettes'
+      preLoaderRoute: typeof PalettesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GradientsRoute: GradientsRoute,
+  PalettesRoute: PalettesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
