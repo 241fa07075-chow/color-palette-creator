@@ -86,25 +86,26 @@ const NAV_ITEMS = [
 function SiteNav() {
   return (
     <header className="border-b border-border/70">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:justify-between">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8">
+        <div className="grid h-16 grid-cols-[minmax(0,auto)_minmax(0,1fr)] items-center gap-3 sm:flex sm:justify-between">
           <Link to="/" className="flex min-w-0 items-center gap-2.5">
             <span className="grad-chip size-7 shrink-0 rounded-[min(1vw,10px)] ring-1 ring-white/10" />
-            <span className="truncate font-display text-lg font-semibold tracking-tight">
+            <span className="truncate font-display text-base font-semibold tracking-tight sm:text-lg">
               Chroma<span className="text-primary">Lab</span>
             </span>
           </Link>
-          <nav className="flex items-center gap-1 rounded-full bg-card p-1 ring-1 ring-border/60">
+          <nav className="flex min-w-0 items-center justify-end gap-1 overflow-x-auto rounded-full bg-card p-1 ring-1 ring-border/60">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 activeOptions={{ exact: item.exact }}
+                className="shrink-0"
               >
                 {({ isActive }) => (
                   <span
                     className={cn(
-                      "block rounded-full px-3 py-1.5 text-sm transition-colors sm:px-4",
+                      "block rounded-full px-2.5 py-1.5 text-[13px] whitespace-nowrap transition-colors sm:px-4 sm:text-sm",
                       isActive
                         ? "bg-primary font-semibold text-primary-foreground"
                         : "font-medium text-muted-foreground hover:text-foreground",
