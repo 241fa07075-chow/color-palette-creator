@@ -95,7 +95,7 @@ function GradientsPage() {
                 <span
                   key={s.id}
                   title={`${s.color} at ${s.pos}%`}
-                  className="size-8 rounded-full ring-2 ring-cream/80"
+                  className="size-8 rounded-full ring-2 ring-foreground/80"
                   style={{ backgroundColor: s.color }}
                 />
               ))}
