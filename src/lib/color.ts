@@ -19,7 +19,7 @@ const clamp = (v: number, min: number, max: number) =>
 
 export function hexToRgb(hex: string): RGB | null {
   const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
-  if (!m) return null;
+  if (!m || !m[1]) return null;
   let h = m[1];
   if (h.length === 3) h = h.split("").map((c) => c + c).join("");
   return {
@@ -135,8 +135,10 @@ export function generatePalette(baseHex: string, mode: Harmony): string[] {
     return Array.from({ length: 5 }, () => randomHex());
   const base = hexToHsl(baseHex) ?? { h: 16, s: 100, l: 62 };
   return HARMONY_OFFSETS[mode].map((off, i) => {
-    const l = clamp(base.l + [0, 2, -4, 6, -8][i], 12, 88);
-    const s = clamp(base.s + [0, -6, 4, -10, 8][i], 30, 100);
+    const lDelta = [0, 2, -4, 6, -8][i] ?? 0;
+    const sDelta = [0, -6, 4, -10, 8][i] ?? 0;
+    const l = clamp(base.l + lDelta, 12, 88);
+    const s = clamp(base.s + sDelta, 30, 100);
     return hslToHex({ h: base.h + off, s, l });
   });
 }
