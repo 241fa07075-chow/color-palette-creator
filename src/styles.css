@@ -125,3 +125,24 @@
   box-shadow: 0 0 0 2px oklch(0.959 0.01 87.5);
   cursor: pointer;
 }
+
+/* Native color swatch input reset */
+input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: 1px solid oklch(1 0 0 / 15%);
+  border-radius: 8px;
+}
+input[type="color"]::-moz-color-swatch {
+  border: 1px solid oklch(1 0 0 / 15%);
+  border-radius: 8px;
+}
+
