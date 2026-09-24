@@ -56,15 +56,23 @@ function GradientsPage() {
   const addStop = () =>
     setStops((prev) => {
       if (prev.length >= 5) return prev;
-      const maxPos = Math.max(...prev.map((s) => s.pos));
-      return [
-        ...prev,
-        {
-          id: nextId++,
-          color: "#4CC9F0",
-          pos: maxPos >= 100 ? 100 : Math.round(maxPos + (100 - maxPos) / 2),
-        },
-      ];
+      const sortedPos = prev.map((s) => s.pos).sort((a, b) => a - b);
+      let bestStart = sortedPos[0] ?? 0;
+      let bestGap = 0;
+      for (let i = 0; i < sortedPos.length - 1; i++) {
+        const gap = (sortedPos[i + 1] ?? 0) - (sortedPos[i] ?? 0);
+        if (gap > bestGap) {
+          bestGap = gap;
+          bestStart = sortedPos[i] ?? 0;
+        }
+      }
+      const pos =
+        bestGap > 1
+          ? Math.round(bestStart + bestGap / 2)
+          : (sortedPos.at(-1) ?? 100) >= 100
+            ? 100
+            : 0;
+      return [...prev, { id: nextId++, color: "#4CC9F0", pos }];
     });
 
   const removeStop = (id: number) =>
